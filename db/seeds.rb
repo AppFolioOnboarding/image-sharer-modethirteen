@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+(20..39).each do |id|
+  Image.create(url: "https://picsum.photos/id/#{id}/400/400.jpg")
+end
