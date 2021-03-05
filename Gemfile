@@ -49,5 +49,5 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # image-sharer-modethirteen dependencies
-gem 'simple_form'
 gem 'jsonapi-serializer'
+gem 'simple_form'

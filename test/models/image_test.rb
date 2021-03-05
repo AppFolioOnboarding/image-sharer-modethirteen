@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ImageTest < ActiveSupport::TestCase
-
   test 'can save image if url starts with https' do
     url = 'https://example.com/foo.png'
     image = Image.new(url: url)

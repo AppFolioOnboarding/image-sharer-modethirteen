@@ -3,27 +3,26 @@ class ImagesController < ApplicationController
 
   def index
     respond_to do |format|
-      # TODO (andyv.vaughn@appfolio.con, 20210303): grab tags from request and include in redirect
+      # TODO: (andyv.vaughn@appfolio.con, 20210303): grab tags from request and include in redirect
       format.html { redirect_to controller: 'application', action: 'home', status: :found }
-      format.json {
-        # TODO (andy.vaughn@appfolio.com, 20210301): filter API results by incoming tag(s)
+      format.json do
+        # TODO: (andy.vaughn@appfolio.com, 20210301): filter API results by incoming tag(s)
         @images = Image.all.order('id DESC')
-        render json: ImageSerializer.new(@images,{
-          is_collection: true,
-          params: {
-            href: images_url
-          },
-          meta: {
-            count: @images.count
-          },
-          links: {
-            self: {
-              html: images_url,
-              json: images_url(format: :json)
-            }
-          }
-        }).serializable_hash.to_json
-      }
+        render json: ImageSerializer.new(@images,
+                                         is_collection: true,
+                                         params: {
+                                           href: images_url
+                                         },
+                                         meta: {
+                                           count: @images.count
+                                         },
+                                         links: {
+                                           self: {
+                                             html: images_url,
+                                             json: images_url(format: :json)
+                                           }
+                                         }).serializable_hash.to_json
+      end
     end
   end
 
@@ -34,7 +33,7 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(params[:image].permit(:url))
     if @image.save
-      # TODO (andy.vaughn@appfolio.com, 20210302): localize flash message
+      # TODO: (andy.vaughn@appfolio.com, 20210302): localize flash message
       flash[:success] = 'Image successfully submitted.'
       redirect_to @image
     else
@@ -46,13 +45,12 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     respond_to do |format|
       format.html
-      format.json {
-        render json: ImageSerializer.new(@image, {
-          params: {
-            href: images_url
-          }
-        }).serializable_hash.to_json
-      }
+      format.json do
+        render json: ImageSerializer.new(@image,
+                                         params: {
+                                           href: images_url
+                                         }).serializable_hash.to_json
+      end
     end
   end
 end

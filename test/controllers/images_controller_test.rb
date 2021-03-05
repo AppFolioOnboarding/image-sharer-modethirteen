@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
-
   test 'images index redirects home' do
     get images_url
     assert_redirected_to root_url
@@ -25,7 +24,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal response.body, JSON[{
       data: [
         {
-          id: "#{baz.id}",
+          id: baz.id.to_s,
           type: 'image',
           attributes: {
             url: baz.url,
@@ -48,7 +47,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
           }
         },
         {
-          id: "#{bar.id}",
+          id: bar.id.to_s,
           type: 'image',
           attributes: {
             url: bar.url,
@@ -71,7 +70,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
           }
         },
         {
-          id: "#{foo.id}",
+          id: foo.id.to_s,
           type: 'image',
           attributes: {
             url: foo.url,
@@ -115,7 +114,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'application/json', response.content_type
     assert_equal response.body, JSON[{
       data: {
-        id: "#{bar.id}",
+        id: bar.id.to_s,
         type: 'image',
         attributes: {
           url: bar.url,

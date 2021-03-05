@@ -6,6 +6,7 @@ AllCops:
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - 'bin/*'
+    - '**/simple_form*'
   TargetRubyVersion: 2.5
 
 Layout/IndentFirstArrayElement:
@@ -19,6 +20,15 @@ Layout/MultilineMethodCallIndentation:
 
 Metrics/LineLength:
   Max: 112  # Maximum line length from `rails new`
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/BlockLength:
+  Max: 100
 
 Rails:
   Enabled: true
