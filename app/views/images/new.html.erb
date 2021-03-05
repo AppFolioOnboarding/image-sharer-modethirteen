@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @image do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :url, label: 'Image Link URL', hint: 'HTTPS-only secure image URLs are allowed' %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+    <div class="col-md-6 jumbotron">
+      <p class="lead">Why Share Images Through PhotoFolio?</p>
+      <p class="text-muted">In short, massive engagement potential! PhotoFolio is browsed daily by an average of two (2) AppFolio APM software engineers.</p>
+      <p class="text-muted">Your submitted images will be viewed for an average duration of 1.5 secs before they are recycled with <code>rails db:reset</code>. With these sort of performance metrics, you can stop relying on imgur.com for your tired attempts to connect your brand with Generation Z through contrived "viral" images!</p>
+    </div>
+  </div>
+</div>
