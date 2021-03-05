@@ -4,6 +4,7 @@
       <%= simple_form_for @image do |f| %>
         <%= f.error_notification %>
         <%= f.input :url, label: 'Image Link URL', hint: 'HTTPS-only secure image URLs are allowed' %>
+        <%= f.input :tag_list, label: 'Image Tags', hint: 'A collection of comma-separated tags' %>
         <%= f.button :submit %>
       <% end %>
     </div>

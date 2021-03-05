@@ -6,7 +6,9 @@ AllCops:
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - 'bin/*'
-    - '**/simple_form*'
+    - 'db/migrate/*.acts_as_taggable_on_engine.rb'
+    - 'config/initializers/simple_form.rb'
+    - 'config/initializers/simple_form_bootstrap.rb'
   TargetRubyVersion: 2.5
 
 Layout/IndentFirstArrayElement:

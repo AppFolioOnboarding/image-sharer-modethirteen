@@ -1,4 +1,6 @@
 class Image < ApplicationRecord
+  acts_as_taggable_on :tags
+
   attribute :hostname, :string
   attribute :next
   attribute :previous

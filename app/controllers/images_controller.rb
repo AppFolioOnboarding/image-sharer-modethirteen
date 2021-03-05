@@ -31,7 +31,7 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(params[:image].permit(:url))
+    @image = Image.new(params[:image].permit(:url, :tag_list))
     if @image.save
       # TODO: (andy.vaughn@appfolio.com, 20210302): localize flash message
       flash[:success] = 'Image successfully submitted.'

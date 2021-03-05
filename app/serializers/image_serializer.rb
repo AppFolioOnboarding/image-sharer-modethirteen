@@ -3,6 +3,9 @@ class ImageSerializer
 
   attributes :url, :hostname
   attribute :created, &:created_at
+  attribute :tags do |object|
+    object.tags.map(&:name)
+  end
 
   link :self do |object, params|
     html = "#{params[:href]}/#{object.id}"

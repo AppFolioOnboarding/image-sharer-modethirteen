@@ -37,3 +37,11 @@ footer p {
 }
 
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.tags .tag:last-child {
+  margin-right: 0;
+}
+
+.tag {
+  margin-right: .5rem
+}
