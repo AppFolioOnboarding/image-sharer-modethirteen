@@ -12,6 +12,13 @@ class Images {
   }
 
   /**
+   * @returns {Promise<Object[]>}
+   */
+  getImages() {
+    return get(`${this.baseUri}/images.json`);
+  }
+
+  /**
    * @param {Integer} id
    * @returns {Promise<Object>}
    */

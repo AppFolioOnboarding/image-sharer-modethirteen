@@ -1,7 +1,31 @@
 class ImagesController < ApplicationController
   protect_from_forgery with: :exception
 
-  def index; end
+  def index
+    respond_to do |format|
+      # TODO (andyv.vaughn@appfolio.con, 20210303): grab tags from request and include in redirect
+      format.html { redirect_to controller: 'application', action: 'home', status: :found }
+      format.json {
+        # TODO (andy.vaughn@appfolio.com, 20210301): filter API results by incoming tag(s)
+        @images = Image.all.order('id DESC')
+        render json: ImageSerializer.new(@images,{
+          is_collection: true,
+          params: {
+            href: images_url
+          },
+          meta: {
+            count: @images.count
+          },
+          links: {
+            self: {
+              html: images_url,
+              json: images_url(format: :json)
+            }
+          }
+        }).serializable_hash.to_json
+      }
+    end
+  end
 
   def new
     @image = Image.new

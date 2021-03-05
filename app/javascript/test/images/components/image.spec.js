@@ -36,9 +36,8 @@ describe('<Image />', () => {
     const img = wrapper.find('img');
     assert.strictEqual(img.props().src, 'https://example.com/foo.png');
     assert.strictEqual(img.props().alt, 'Hosted by example.com');
-    assert(api.getImage.getCall(0).calledWith(sinon.match(2)));
+    sinon.assert.calledWith(api.getImage, sinon.match(2));
   });
-
   it('should render an image with active pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
       attributes: {
@@ -68,7 +67,7 @@ describe('<Image />', () => {
     const next = paginators.at(1);
     assert.strictEqual(next.hasClass('disabled'), false);
     assert.strictEqual(next.find('a').props().href, 'https://folio.io/images/1');
-    assert(api.getImage.getCall(0).calledWith(sinon.match(2)));
+    sinon.assert.calledWith(api.getImage, sinon.match(2));
   });
   it('should render an image with disabled pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
@@ -95,6 +94,6 @@ describe('<Image />', () => {
     const next = paginators.at(1);
     assert(next.hasClass('disabled'));
     assert.strictEqual(next.find('a').props().href, '#');
-    assert(api.getImage.getCall(0).calledWith(sinon.match(2)));
+    sinon.assert.calledWith(api.getImage, sinon.match(2));
   });
 });
