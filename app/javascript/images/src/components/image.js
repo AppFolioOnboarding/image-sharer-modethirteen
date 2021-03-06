@@ -1,6 +1,7 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React, { Component } from 'react';
 import api from '../../../api/images';
+import Card from './card';
 
 /**
  * @param {string} label
@@ -54,24 +55,16 @@ export default class Image extends Component {
     if (error) {
       return <div className="alert alert-danger">Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return (
-        <div className="spinner-border">
-          <span className="sr-only">
-            Loading...
-          </span>
-        </div>
-      );
+      return <Card />;
     }
     return (
       <div className="row">
-        <div className="col-md-3">
-          <div className="card mb-3 box-shadow">
-            <img
-              className="card-img-top"
-              src={image.attributes.url}
-              alt={`Hosted by ${image.attributes.hostname}`}
-            />
-          </div>
+        <div className="col-md-3 component-card">
+          <Card
+            hostname={image.attributes.hostname}
+            src={image.attributes.url}
+            tags={image.attributes.tags}
+          />
           <ul className="pagination">
             {paginator('Previous', image.links.previous)}
             {paginator('Next', image.links.next)}

@@ -94,4 +94,11 @@ class ImageTest < ActiveSupport::TestCase
     assert_same bar.previous.id, baz.id
     assert_same baz.previous.id, foo.id
   end
+
+  test 'can add tags' do
+    foo = Image.create(url: 'https://example.com/xyzzy.png')
+    foo.tag_list.add('bar', 'baz')
+    foo.save
+    assert_equal foo.tags.map(&:name), %w[bar baz]
+  end
 end

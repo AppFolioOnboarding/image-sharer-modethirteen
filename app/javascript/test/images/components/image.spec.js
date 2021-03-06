@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import assert from 'assert';
 import sinon from 'sinon';
 import Image from '../../../images/src/components/image';
@@ -12,8 +12,19 @@ describe('<Image />', () => {
     sinon.restore();
   });
   it('should render a loading message', () => {
-    sinon.stub(api, 'getImage').resolves();
-    const wrapper = shallow(<Image />);
+    sinon.stub(api, 'getImage').resolves({
+      attributes: {
+        id: 2,
+        url: 'https://example.com/foo.png',
+        hostname: 'example.com',
+        tags: []
+      },
+      links: {
+        previous: null,
+        next: null
+      }
+    });
+    const wrapper = mount(<Image id={2} />);
     assert.strictEqual(wrapper.text(), 'Loading...');
   });
   it('should render an image', async () => {
@@ -21,7 +32,8 @@ describe('<Image />', () => {
       attributes: {
         id: 2,
         url: 'https://example.com/foo.png',
-        hostname: 'example.com'
+        hostname: 'example.com',
+        tags: []
       },
       links: {
         previous: null,
@@ -38,12 +50,42 @@ describe('<Image />', () => {
     assert.strictEqual(img.props().alt, 'Hosted by example.com');
     sinon.assert.calledWith(api.getImage, sinon.match(2));
   });
+  it('should render an image with tags', async () => {
+    sinon.stub(api, 'getImage').resolves({
+      attributes: {
+        id: 2,
+        url: 'https://example.com/foo.png',
+        hostname: 'example.com',
+        tags: [
+          'corge',
+          'waldo',
+          'xyzzy'
+        ]
+      },
+      links: {
+        previous: null,
+        next: null
+      }
+    });
+    const wrapper = mount(<Image id={2} />);
+    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
+    await wrapper.instance().componentDidMount();
+    wrapper.setProps();
+    /**/
+    const tags = wrapper.find('.component-card .tags').first();
+    assert.strictEqual(tags.find('.tag').length, 3);
+    assert.strictEqual(tags.find('.tag').at(0).text(), 'corge');
+    assert.strictEqual(tags.find('.tag').at(1).text(), 'waldo');
+    assert.strictEqual(tags.find('.tag').at(2).text(), 'xyzzy');
+    sinon.assert.calledWith(api.getImage, sinon.match(2));
+  });
   it('should render an image with active pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
       attributes: {
         id: 2,
         url: 'https://example.com/foo.png',
-        hostname: 'example.com'
+        hostname: 'example.com',
+        tags: []
       },
       links: {
         previous: {
@@ -74,7 +116,8 @@ describe('<Image />', () => {
       attributes: {
         id: 2,
         url: 'https://example.com/foo.png',
-        hostname: 'example.com'
+        hostname: 'example.com',
+        tags: []
       },
       links: {
         previous: null,

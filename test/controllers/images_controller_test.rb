@@ -17,7 +17,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'can get thumbnails data' do
     foo = Image.create(url: 'https://images.io/xyzzy.png')
     bar = Image.create(url: 'https://images.com/plugh.png')
+    bar.tag_list.add('corge')
+    bar.save
     baz = Image.create(url: 'https://images.org/fred.png')
+    baz.tag_list.add('waldo', 'grault')
+    baz.save
     get images_url, params: { format: :json }
     assert_response :success
     assert_equal 'application/json', response.content_type
@@ -29,7 +33,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
           attributes: {
             url: baz.url,
             hostname: baz.hostname,
-            created: baz.created_at.iso8601(3)
+            created: baz.created_at.iso8601(3),
+            tags: %w[waldo grault]
           },
           links: {
             self: {
@@ -52,7 +57,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
           attributes: {
             url: bar.url,
             hostname: bar.hostname,
-            created: bar.created_at.iso8601(3)
+            created: bar.created_at.iso8601(3),
+            tags: %w[corge]
           },
           links: {
             self: {
@@ -75,7 +81,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
           attributes: {
             url: foo.url,
             hostname: foo.hostname,
-            created: foo.created_at.iso8601(3)
+            created: foo.created_at.iso8601(3),
+            tags: []
           },
           links: {
             self: {
@@ -108,6 +115,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'can get image data' do
     foo = Image.create(url: 'https://images.io/xyzzy.png')
     bar = Image.create(url: 'https://images.com/plugh.png')
+    bar.tag_list.add('thud', 'quux')
+    bar.save
     baz = Image.create(url: 'https://images.org/fred.png')
     get image_url(bar.id), params: { format: :json }
     assert_response :success
@@ -119,7 +128,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
         attributes: {
           url: bar.url,
           hostname: bar.hostname,
-          created: bar.created_at.iso8601(3)
+          created: bar.created_at.iso8601(3),
+          tags: %w[thud quux]
         },
         links: {
           self: {
