@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class Card extends Component {
   render() {
-    const { href, src, hostname, tags = [] } = this.props;
+    const { href, src, hostname, tags = [], tag } = this.props;
     if (!src) {
       return (
         <div className="spinner-border">
@@ -24,9 +24,10 @@ export default class Card extends Component {
         {href ? <a href={href}>{img}</a> : img}
         <div className="card-body">
           <div className="tags">
-            {tags.map(tag => (
-              <span className="tag badge badge-secondary" key={tag}>{tag}</span>
-            ))}
+            {tags.map((t) => {
+              const badgeClassName = typeof tag !== 'undefined' && tag === t ? 'badge-info' : 'badge-secondary';
+              return <a href={`/tags/${t}`} className={`tag badge ${badgeClassName}`} key={t}>{t}</a>;
+            })}
           </div>
         </div>
       </div>
