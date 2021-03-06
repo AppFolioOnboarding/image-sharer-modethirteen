@@ -6,8 +6,9 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from StandardError, with: :render_internal_error
 
-  # TODO: (andy.vaughn@appfolio.com, 20210303): grab tags from request and include in erb template
-  def home; end
+  def home
+    @tag = params[:tag]
+  end
 
   # noinspection RubyInstanceMethodNamingConvention
   def render_unprocessable_entity_response(exception)
