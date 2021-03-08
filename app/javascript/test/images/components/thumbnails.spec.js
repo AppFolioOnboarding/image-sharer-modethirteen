@@ -64,10 +64,8 @@ describe('<Thumbnails />', () => {
       },
     ]);
     const wrapper = mount(<Thumbnails />);
-    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
     await wrapper.instance().componentDidMount();
-    wrapper.setProps();
-    /**/
+    wrapper.update();
     const img = wrapper.find('.component-card img');
     assert.strictEqual(img.at(0).props().src, 'https://baz.com/plugh.png');
     assert.strictEqual(img.at(0).props().alt, 'Hosted by baz.com');
