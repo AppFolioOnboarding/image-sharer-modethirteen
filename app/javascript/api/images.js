@@ -1,4 +1,4 @@
-import { get, serialize } from './http';
+import { get, serialize } from '../lib/http';
 
 class Images {
   /**

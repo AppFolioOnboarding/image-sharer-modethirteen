@@ -8,7 +8,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'can get thumbnails container for thumbnails react component with tag' do
-    get tag_url 'foo'
+    get root_url, params: { tag: 'foo' }
     assert_response :success
     assert_select 'div/@id', 'thumbnails-container'
     assert_select 'div/@data-tag', 'foo'

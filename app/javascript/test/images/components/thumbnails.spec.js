@@ -78,13 +78,13 @@ describe('<Thumbnails />', () => {
     const tags = wrapper.find('.component-card .tags');
     assert.strictEqual(tags.at(0).find('.tag').length, 2);
     assert.strictEqual(tags.at(0).find('.tag').at(0).text(), 'fred');
-    assert.strictEqual(tags.at(0).find('.tag').at(0).props().href, '/tags/fred');
+    assert.strictEqual(tags.at(0).find('.tag').at(0).props().href, '/?tag=fred');
     assert.strictEqual(tags.at(0).find('.tag').at(1).text(), 'waldo');
-    assert.strictEqual(tags.at(0).find('.tag').at(1).props().href, '/tags/waldo');
+    assert.strictEqual(tags.at(0).find('.tag').at(1).props().href, '/?tag=waldo');
     assert.strictEqual(tags.at(1).find('.tag').length, 0);
     assert.strictEqual(tags.at(2).find('.tag').length, 1);
     assert.strictEqual(tags.at(2).find('.tag').at(0).text(), 'corge');
-    assert.strictEqual(tags.at(2).find('.tag').at(0).props().href, '/tags/corge');
+    assert.strictEqual(tags.at(2).find('.tag').at(0).props().href, '/?tag=corge');
     sinon.assert.called(api.getImages);
   });
 });

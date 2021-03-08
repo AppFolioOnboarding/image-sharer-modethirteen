@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { serialize } from '../../../lib/http';
 
 export default class Card extends Component {
   render() {
@@ -26,7 +27,7 @@ export default class Card extends Component {
           <div className="tags">
             {tags.map((t) => {
               const badgeClassName = typeof tag !== 'undefined' && tag === t ? 'badge-info' : 'badge-secondary';
-              return <a href={`/tags/${t}`} className={`tag badge ${badgeClassName}`} key={t}>{t}</a>;
+              return <a href={`/?${serialize({ tag: t })}`} className={`tag badge ${badgeClassName}`} key={t}>{t}</a>;
             })}
           </div>
         </div>
