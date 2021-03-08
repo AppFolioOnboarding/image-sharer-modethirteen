@@ -71,11 +71,11 @@ describe('<Image />', () => {
     const tags = wrapper.find('.component-card .tags').first();
     assert.strictEqual(tags.find('.tag').length, 3);
     assert.strictEqual(tags.find('.tag').at(0).text(), 'corge');
-    assert.strictEqual(tags.find('.tag').at(0).props().href, '/tags/corge');
+    assert.strictEqual(tags.find('.tag').at(0).props().href, '/?tag=corge');
     assert.strictEqual(tags.find('.tag').at(1).text(), 'waldo');
-    assert.strictEqual(tags.find('.tag').at(1).props().href, '/tags/waldo');
+    assert.strictEqual(tags.find('.tag').at(1).props().href, '/?tag=waldo');
     assert.strictEqual(tags.find('.tag').at(2).text(), 'xyzzy');
-    assert.strictEqual(tags.find('.tag').at(2).props().href, '/tags/xyzzy');
+    assert.strictEqual(tags.find('.tag').at(2).props().href, '/?tag=xyzzy');
     sinon.assert.calledWith(api.getImage, sinon.match(2));
   });
   it('should render an image with active pagination', async () => {
