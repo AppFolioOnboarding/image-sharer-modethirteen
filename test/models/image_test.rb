@@ -78,25 +78,25 @@ class ImageTest < ActiveSupport::TestCase
   end
 
   test 'can get next descending record' do
-    foo = Image.create(url: 'https://example.com/xyzzy.png')
-    bar = Image.create(url: 'https://example.com/xyzzy.png')
-    baz = Image.create(url: 'https://example.com/xyzzy.png')
+    foo = Image.create!(url: 'https://example.com/xyzzy.png')
+    bar = Image.create!(url: 'https://example.com/xyzzy.png')
+    baz = Image.create!(url: 'https://example.com/xyzzy.png')
     assert_same baz.next.id, bar.id
     assert_same bar.next.id, foo.id
     assert_same foo.next.id, baz.id
   end
 
   test 'can get previous ascending record' do
-    foo = Image.create(url: 'https://example.com/xyzzy.png')
-    bar = Image.create(url: 'https://example.com/xyzzy.png')
-    baz = Image.create(url: 'https://example.com/xyzzy.png')
+    foo = Image.create!(url: 'https://example.com/xyzzy.png')
+    bar = Image.create!(url: 'https://example.com/xyzzy.png')
+    baz = Image.create!(url: 'https://example.com/xyzzy.png')
     assert_same foo.previous.id, bar.id
     assert_same bar.previous.id, baz.id
     assert_same baz.previous.id, foo.id
   end
 
   test 'can add tags' do
-    foo = Image.create(url: 'https://example.com/xyzzy.png')
+    foo = Image.create!(url: 'https://example.com/xyzzy.png')
     foo.tag_list.add('bar', 'baz')
     foo.save
     assert_equal foo.tags.map(&:name), %w[bar baz]

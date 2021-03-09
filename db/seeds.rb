@@ -10,5 +10,5 @@
   %w[foo bar baz plugh xyzzy fred qux bazz foobar quxx].sample(3).each do |tag|
     image.tag_list.add(tag)
   end
-  image.save
+  image.save!
 end
