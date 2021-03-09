@@ -161,4 +161,29 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       }
     }]
   end
+
+  test 'can get image submission form' do
+    get '/images/new'
+    assert_response :success
+    assert_select 'form/@action', images_path
+    assert_select 'form//input[@id="image_url"]', true
+    assert_select 'form//input[@id="image_tag_list"]', true
+  end
+
+  test 'can save valid image data' do
+    assert_difference -> { Image.count }, 1 do
+      post images_url, params: { image: { url: 'https://example.com/foo.png', tag_list: 'baz, qux' } }
+    end
+    assert_redirected_to image_url(Image.last)
+  end
+
+  test 'cannnot save invalid image data' do
+    post images_url, params: { image: { url: 'http://example.com/foo.txt', tag_list: 'baz, qux' } }
+    assert_response :unprocessable_entity
+  end
+
+  test 'cannnot save empty image data' do
+    post images_url
+    assert_response :unprocessable_entity
+  end
 end
