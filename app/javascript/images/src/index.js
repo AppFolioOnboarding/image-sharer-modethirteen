@@ -9,5 +9,5 @@ if (imageContainer instanceof Element) {
 }
 const thumbnailsContainer = document.getElementById('thumbnails-container');
 if (thumbnailsContainer instanceof Element) {
-  ReactDOM.render(<Thumbnails />, thumbnailsContainer);
+  ReactDOM.render(<Thumbnails tag={(thumbnailsContainer.dataset || {}).tag} />, thumbnailsContainer);
 }

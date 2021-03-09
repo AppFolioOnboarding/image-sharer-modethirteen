@@ -14,11 +14,13 @@ export default class Thumbnails extends Component {
   }
 
   async componentDidMount() {
+    const { tag } = this.props;
     try {
-      const data = await api.getImages();
+      const data = await api.getImages({ tag });
       this.setState({
         isLoaded: true,
-        images: data
+        images: data,
+        tag
       });
     } catch (error) {
       this.setState({
@@ -29,7 +31,7 @@ export default class Thumbnails extends Component {
   }
 
   render() {
-    const { error, isLoaded, images } = this.state;
+    const { error, isLoaded, images, tag } = this.state;
     if (error) {
       return <div className="alert alert-danger">Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -44,6 +46,7 @@ export default class Thumbnails extends Component {
               hostname={image.attributes.hostname}
               src={image.attributes.url}
               tags={image.attributes.tags}
+              tag={tag}
             />
           </div>
         ))}

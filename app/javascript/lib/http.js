@@ -57,20 +57,21 @@ export function post(url, body) {
 }
 
 /**
- * Serialize objects for application/x-www-form-urlencoded HTTP POST body
+ * Serialize objects for GET query parameters or application/x-www-form-urlencoded HTTP POST body
  *
- * @param {Object} obj
- * @param {String} prefix
+ * @param {Object} parameters
+ * @param {Object} options
+ * @param {String|null} options.prefix
  * @returns {String}
  */
-export function serialize(obj, prefix) {
+export function serialize(parameters, { prefix= null } = {}) {
   const parts = [];
-  Object.keys(obj).forEach(key => {
-    if (obj[key] !== undefined && obj[key] !== null) {
+  Object.keys(parameters).forEach(key => {
+    if (typeof parameters[key] !== 'undefined' && parameters[key] !== null) {
       const param = prefix ? `${prefix}[${key}]` : key;
-      const value = obj[key];
-      if (typeof(value) === 'object') {
-        parts.push(serialize(value, param));
+      const value = parameters[key];
+      if (typeof value === 'object') {
+        parts.push(serialize(value, { prefix: param }));
       } else {
         parts.push(`${encodeURIComponent(param)}=${encodeURIComponent(value)}`);
       }

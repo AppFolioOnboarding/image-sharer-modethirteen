@@ -14,11 +14,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select '.navbar a[href=?]', '/images/new'
   end
 
-  test 'images index redirects home' do
-    get images_url
-    assert_redirected_to root_url
-  end
-
   test 'can get image container for image react component' do
     image = Image.create(url: 'https://example.com/xyzzy.png')
     get image_url(image.id)

@@ -2,26 +2,15 @@ class ImagesController < ApplicationController
   protect_from_forgery with: :exception
 
   def index
+    @tag = params[:tag]
     respond_to do |format|
-      # TODO: (andyv.vaughn@appfolio.con, 20210303): grab tags from request and include in redirect
-      format.html { redirect_to controller: 'application', action: 'home', status: :found }
+      format.html
       format.json do
-        # TODO: (andy.vaughn@appfolio.com, 20210301): filter API results by incoming tag(s)
-        @images = Image.all.order('id DESC')
-        render json: ImageSerializer.new(@images,
-                                         is_collection: true,
-                                         params: {
-                                           href: images_url
-                                         },
-                                         meta: {
-                                           count: @images.count
-                                         },
-                                         links: {
-                                           self: {
-                                             html: images_url,
-                                             json: images_url(format: :json)
-                                           }
-                                         }).serializable_hash.to_json
+        render json: serialize_images((if @tag
+                                         Image.tagged_with(@tag)
+                                       else
+                                         Image.all
+                                       end).order('id DESC'))
       end
     end
   end
@@ -53,11 +42,34 @@ class ImagesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: ImageSerializer.new(@image,
-                                         params: {
-                                           href: images_url
-                                         }).serializable_hash.to_json
+        render json: serialize_image(@image)
       end
     end
+  end
+
+  private
+
+  def serialize_image(image)
+    ImageSerializer.new(image,
+                        params: {
+                          href: images_url
+                        }).serializable_hash.to_json
+  end
+
+  def serialize_images(images)
+    ImageSerializer.new(images,
+                        is_collection: true,
+                        params: {
+                          href: images_url
+                        },
+                        meta: {
+                          count: images.count
+                        },
+                        links: {
+                          self: {
+                            html: images_url,
+                            json: images_url(format: :json)
+                          }
+                        }).serializable_hash.to_json
   end
 end
