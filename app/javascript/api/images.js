@@ -1,4 +1,4 @@
-import { get } from './http';
+import { get, serialize } from '../lib/http';
 
 class Images {
   /**
@@ -12,10 +12,20 @@ class Images {
   }
 
   /**
+   * @param {Object} options
+   * @param {String|null} options.tag - filter images by {tag}
    * @returns {Promise<Object[]>}
    */
-  getImages() {
-    return get(`${this.baseUri}/images.json`);
+  getImages({ tag = null } = {}) {
+    let url = `${this.baseUri}/images.json`;
+    const parameters = {};
+    if (tag) {
+      parameters.tag = tag;
+    }
+    if (Object.keys(parameters).length) {
+      url += `?${serialize(parameters)}`;
+    }
+    return get(url);
   }
 
   /**
