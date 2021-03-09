@@ -181,4 +181,23 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     post images_url
     assert_response :unprocessable_entity
   end
+
+  test 'cannot render image submission button on image submission form' do
+    get '/images/new'
+    assert_response :success
+    assert_select 'a[@id="image-submission"]', false
+  end
+
+  test 'can render image submission button on image view page' do
+    foo = Image.create!(url: 'https://images.com/plugh.png')
+    get image_url(foo.id)
+    assert_response :success
+    assert_select 'a[@id="image-submission"]', true
+  end
+
+  test 'can render image submission button on thumbnails page' do
+    get images_url
+    assert_response :success
+    assert_select 'a[@id="image-submission"]', true
+  end
 end
