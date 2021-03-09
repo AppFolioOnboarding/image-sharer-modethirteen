@@ -6,10 +6,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from StandardError, with: :render_internal_error
 
-  def home
-    @tag = params[:tag]
-  end
-
   # noinspection RubyInstanceMethodNamingConvention
   def render_unprocessable_entity_response(exception)
     render json: exception.record.errors, status: :unprocessable_entity

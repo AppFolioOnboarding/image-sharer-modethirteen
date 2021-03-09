@@ -2,11 +2,12 @@ class ImagesController < ApplicationController
   protect_from_forgery with: :exception
 
   def index
+    @tag = params[:tag]
     respond_to do |format|
-      format.html { redirect_to controller: 'application', action: 'home', tag: params[:tag], status: :found }
+      format.html
       format.json do
-        render json: serialize_images((if params[:tag]
-                                         Image.tagged_with(params[:tag])
+        render json: serialize_images((if @tag
+                                         Image.tagged_with(@tag)
                                        else
                                          Image.all
                                        end).order('id DESC'))
