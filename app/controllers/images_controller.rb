@@ -20,14 +20,21 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(params[:image].permit(:url, :tag_list))
-    if @image.save
-      # TODO: (andy.vaughn@appfolio.com, 20210302): localize flash message
-      flash[:success] = 'Image successfully submitted.'
-      redirect_to @image
+    data = params[:image]
+    if data
+      @image = Image.new(data.permit(:url, :tag_list))
+      if @image.save
+        # TODO: (andy.vaughn@appfolio.com, 20210302): localize flash message
+        flash[:success] = 'Image successfully submitted.'
+        redirect_to @image
+        return
+      end
     else
-      render 'new', status: :unprocessable_entity
+      # TODO: (andy.vaughn@appfolio.com, 20210309): localize flash message
+      flash[:error] = 'There was a problem processing your image submission.'
+      @image = Image.new
     end
+    render 'new', status: :unprocessable_entity
   end
 
   def show

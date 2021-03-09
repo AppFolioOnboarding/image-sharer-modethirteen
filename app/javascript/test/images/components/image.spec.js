@@ -41,10 +41,8 @@ describe('<Image />', () => {
       }
     });
     const wrapper = mount(<Image id={2} />);
-    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
     await wrapper.instance().componentDidMount();
-    wrapper.setProps();
-    /**/
+    wrapper.update();
     const img = wrapper.find('img');
     assert.strictEqual(img.props().src, 'https://example.com/foo.png');
     assert.strictEqual(img.props().alt, 'Hosted by example.com');
@@ -68,10 +66,8 @@ describe('<Image />', () => {
       }
     });
     const wrapper = mount(<Image id={2} />);
-    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
     await wrapper.instance().componentDidMount();
-    wrapper.setProps();
-    /**/
+    wrapper.update();
     const tags = wrapper.find('.component-card .tags').first();
     assert.strictEqual(tags.find('.tag').length, 3);
     assert.strictEqual(tags.find('.tag').at(0).text(), 'corge');
@@ -100,10 +96,8 @@ describe('<Image />', () => {
       }
     });
     const wrapper = mount(<Image id={2} />);
-    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
     await wrapper.instance().componentDidMount();
-    wrapper.setProps();
-    /**/
+    wrapper.update();
     const paginators = wrapper.find('ul.pagination li');
     assert.strictEqual(paginators.length, 2);
     const previous = paginators.at(0);
@@ -128,10 +122,8 @@ describe('<Image />', () => {
       }
     });
     const wrapper = mount(<Image id={2} />);
-    /* NOTE (andy.vaughn@appfolio.com, 20210305): hacky workaround for async component mounting, do not replicate */
     await wrapper.instance().componentDidMount();
-    wrapper.setProps();
-    /**/
+    wrapper.update();
     const paginators = wrapper.find('ul.pagination li');
     assert.strictEqual(paginators.length, 2);
     const previous = paginators.at(0);
