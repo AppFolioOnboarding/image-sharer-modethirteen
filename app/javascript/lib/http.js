@@ -20,6 +20,9 @@ function getCsrfToken() {
  * @returns {Promise} - JSON-unserialized API data
  */
 function respond(response) {
+  if(response.status === 204) {
+    return Promise.resolve();
+  }
   return response.json()
     .then((json) => {
       if (json.error) {
@@ -38,6 +41,19 @@ function respond(response) {
 export function get(url) {
   return fetch(url, {
     headers: Object.assign({ 'X-CSRF-Token': getCsrfToken() }, headers),
+  }).then(respond);
+}
+
+/**
+ * @param {String} url
+ * @returns {Promise<Object>} - JSON-unserialized API data
+ */
+export function destroy(url) {
+  return fetch(url, {
+    credentials: 'same-origin',
+    headers: Object.assign({ 'X-CSRF-Token': getCsrfToken() }, headers),
+    method: 'DELETE',
+    redirect: 'error',
   }).then(respond);
 }
 

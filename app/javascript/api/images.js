@@ -1,4 +1,4 @@
-import { get, serialize } from '../lib/http';
+import { get, destroy, serialize } from '../lib/http';
 
 class Images {
   /**
@@ -34,6 +34,14 @@ class Images {
    */
   getImage(id = 0) {
     return get(`${this.baseUri}/images/${id}.json`);
+  }
+
+  /**
+   * @param {Integer} id
+   * @returns {Promise<Object>}
+   */
+  destroyImage(id = 0) {
+    return destroy(`${this.baseUri}/images/${id}.json`);
   }
 }
 
