@@ -1,6 +1,8 @@
 class ImagesController < ApplicationController
   protect_from_forgery with: :exception
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+
   def index
     @tag = params[:tag]
     respond_to do |format|
@@ -35,6 +37,10 @@ class ImagesController < ApplicationController
       @image = Image.new
     end
     render 'new', status: :unprocessable_entity
+  end
+
+  def destroy
+    Image.find(params[:id]).destroy
   end
 
   def show

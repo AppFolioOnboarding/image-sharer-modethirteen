@@ -181,4 +181,15 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     post images_url
     assert_response :unprocessable_entity
   end
+
+  test 'can destroy image' do
+    image = Image.create!(url: 'https://images.io/xyzzy.png')
+    delete image_url image, format: :json
+    assert_response :no_content
+  end
+
+  test 'cannot destroy not found image' do
+    delete image_url 123, format: :json
+    assert_response :not_found
+  end
 end
