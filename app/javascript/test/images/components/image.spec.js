@@ -13,8 +13,8 @@ describe('<Image />', () => {
   });
   it('should render a loading message', () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -29,8 +29,8 @@ describe('<Image />', () => {
   });
   it('should render an image', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -50,8 +50,8 @@ describe('<Image />', () => {
   });
   it('should render an image with tags', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: [
@@ -80,8 +80,8 @@ describe('<Image />', () => {
   });
   it('should render an image with active pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -110,8 +110,8 @@ describe('<Image />', () => {
   });
   it('should render an image with disabled pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []

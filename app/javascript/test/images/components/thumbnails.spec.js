@@ -19,8 +19,8 @@ describe('<Thumbnails />', () => {
   it('should render thumbnails', async () => {
     sinon.stub(api, 'getImages').resolves([
       {
+        id: 3,
         attributes: {
-          id: 3,
           url: 'https://baz.com/plugh.png',
           hostname: 'baz.com',
           tags: [
@@ -35,8 +35,8 @@ describe('<Thumbnails />', () => {
         }
       },
       {
+        id: 2,
         attributes: {
-          id: 2,
           url: 'https://xyzzy.com/qux.png',
           hostname: 'xyzzy.com',
           tags: []
@@ -48,8 +48,8 @@ describe('<Thumbnails />', () => {
         }
       },
       {
+        id: 1,
         attributes: {
-          id: 1,
           url: 'https://foo.com/bar.png',
           hostname: 'foo.com',
           tags: [
