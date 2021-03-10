@@ -24,6 +24,16 @@ const paginator = (label, link) => {
   );
 };
 
+/**
+ * @param {Object} image
+ */
+const destroy = async (image) => {
+  if (window.confirm('This action will permanently delete the image! Do you wish to proceed?')) {
+    await api.destroyImage(image.id);
+    window.location.replace('/');
+  }
+};
+
 export default class Image extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +79,12 @@ export default class Image extends Component {
             {paginator('Previous', image.links.previous)}
             {paginator('Next', image.links.next)}
           </ul>
+          <button
+            type="button"
+            className="delete btn btn-danger"
+            onClick={async () => { await destroy(image); }}
+          >Delete
+          </button>
         </div>
       </div>
     );
