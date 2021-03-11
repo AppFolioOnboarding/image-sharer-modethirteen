@@ -29,8 +29,14 @@ const paginator = (label, link) => {
  */
 const destroy = async (image) => {
   if (window.confirm('This action will permanently delete the image! Do you wish to proceed?')) {
-    await api.destroyImage(image.id);
-    window.location.replace('/');
+    try {
+      await api.destroyImage(image.id);
+      window.location.replace('/');
+    } catch (e) {
+      if (typeof window.flash !== 'undefined') {
+        window.flash.error(e.message);
+      }
+    }
   }
 };
 

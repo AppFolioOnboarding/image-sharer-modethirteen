@@ -21,6 +21,28 @@ export default class Flash extends Component {
     this.state = {
       messages: JSON.parse(props.messages) || []
     };
+    window.flash = this;
+  }
+
+  /**
+   * @param {String} text
+   */
+  error(text) {
+    this.message('error', text);
+  }
+
+  /**
+   * @param {String} type
+   * @param {String} text
+   */
+  message(type, text) {
+    this.setState({
+      messages: this.state.messages.concat({
+        id: Date.now().toString(),
+        type,
+        text
+      })
+    });
   }
 
   render() {
@@ -47,7 +69,7 @@ export default class Flash extends Component {
     const index = this.state.messages.indexOf(message);
     if (index >= 0) {
       this.state.messages.splice(index, 1);
-      this.setState(this.state.messages);
+      this.setState(this.state);
     }
   }
 }

@@ -41,6 +41,7 @@ class ImagesController < ApplicationController
 
   def destroy
     Image.find(params[:id]).destroy
+    flash[:success] = 'Image successfully deleted.'
   end
 
   def show
