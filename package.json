@@ -30,6 +30,8 @@
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
+    "nock": "^10.0.6",
+    "node-fetch": "^2.3.0",
     "react-test-renderer": "^16.14.0",
     "sinon": "^6.0.1",
     "webpack-dev-server": "^3.11.2"

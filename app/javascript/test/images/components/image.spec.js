@@ -13,8 +13,8 @@ describe('<Image />', () => {
   });
   it('should render a loading message', () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -29,8 +29,8 @@ describe('<Image />', () => {
   });
   it('should render an image', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -50,8 +50,8 @@ describe('<Image />', () => {
   });
   it('should render an image with tags', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: [
@@ -80,8 +80,8 @@ describe('<Image />', () => {
   });
   it('should render an image with active pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -110,8 +110,8 @@ describe('<Image />', () => {
   });
   it('should render an image with disabled pagination', async () => {
     sinon.stub(api, 'getImage').resolves({
+      id: 2,
       attributes: {
-        id: 2,
         url: 'https://example.com/foo.png',
         hostname: 'example.com',
         tags: []
@@ -133,5 +133,29 @@ describe('<Image />', () => {
     assert(next.hasClass('disabled'));
     assert.strictEqual(next.find('a').props().href, '#');
     sinon.assert.calledWith(api.getImage, sinon.match(2));
+  });
+  it('should delete an image', async () => {
+    sinon.stub(api, 'getImage').resolves({
+      id: 2,
+      attributes: {
+        url: 'https://example.com/foo.png',
+        hostname: 'example.com',
+        tags: []
+      },
+      links: {
+        previous: null,
+        next: null
+      }
+    });
+    sinon.stub(api, 'destroyImage').resolves();
+    sinon.stub(window, 'confirm').returns(true);
+    sinon.stub(window.location, 'replace');
+    const wrapper = mount(<Image id={2} />);
+    await wrapper.instance().componentDidMount();
+    wrapper.update();
+    wrapper.find('.delete').simulate('click');
+    await Promise.resolve();
+    sinon.assert.calledWith(api.destroyImage, sinon.match(2));
+    sinon.assert.calledWith(window.location.replace, sinon.match('/'));
   });
 });
