@@ -170,6 +170,12 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       post images_url, params: { image: { url: 'https://example.com/foo.png', tag_list: 'baz, qux' } }
     end
     assert_redirected_to image_url(Image.last)
+    follow_redirect!
+    assert_select 'div[@id="flash-container"]/@data-messages' do |attribute|
+      messages = JSON.parse attribute.text
+      assert_equal 1, messages.count
+      assert_equal 'success', messages[0]['type']
+    end
   end
 
   test 'cannnot save invalid image data' do
@@ -180,6 +186,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'cannnot save empty image data' do
     post images_url
     assert_response :unprocessable_entity
+    assert_select 'div[@id="flash-container"]/@data-messages' do |attribute|
+      messages = JSON.parse attribute.text
+      assert_equal 1, messages.count
+      assert_equal 'error', messages[0]['type']
+    end
   end
 
   test 'can destroy image' do
