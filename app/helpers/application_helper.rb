@@ -1,14 +1,14 @@
 module ApplicationHelper
-  # Map flash message type symbol to bootstrap stylesheet class
-  # @param [String] level - flash type symbol cast to string
+  # Render flash messages as JSON data for React component
+  # @param [Array<Hash>] messages - flash messages by type and message
   # @return [String]
-  def flash_class(level)
-    bootstrap_alert_class = {
-      'error' => 'alert-danger',
-      'info' => 'alert-info',
-      'success' => 'alert-success',
-      'warning' => 'alert-warning'
-    }
-    bootstrap_alert_class[level]
+  def flash_json(messages)
+    messages.collect do |type, text|
+      {
+        id: text.object_id,
+        type: type,
+        text: text
+      }
+    end.to_json
   end
 end

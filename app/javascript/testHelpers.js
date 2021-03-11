@@ -3,6 +3,9 @@
 import 'jsdom-global/register';
 import Adapter from 'enzyme-adapter-react-16/build/index';
 import { configure } from 'enzyme';
+import fetch from 'node-fetch';
+
+global.fetch = fetch;
 
 configure({ adapter: new Adapter() });
 
