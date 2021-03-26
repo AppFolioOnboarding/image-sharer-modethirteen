@@ -4,12 +4,6 @@
       <img class="d-inline-block align-middle" alt="<%= t('site_name') %>" src="<%= image_url('logo.png') %>" height="50px" />
       <%= t('site_name') %>
     </a>
-    <% unless current_page?(new_image_path) %>
-      <form class="form-inline">
-        <a class="btn btn-primary" href="/images/new" role="button">
-          Submit an Image
-        </a>
-      </form>
-    <% end %>
+    <%= yield :header %>
   </nav>
 </header>
